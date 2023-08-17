@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Webapp;
+namespace App\Controller\Admin;
 
 use App\Entity\Admin\Member;
 use App\Form\RegistrationFormType;
@@ -45,7 +45,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation('og_security_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('contact@openpixl.fr', 'Contact OpenPixl'))
                     ->to($user->getEmail())
@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_webapp_public_index');
+            return $this->redirectToRoute('og_security_login_in');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -79,6 +79,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre email a été vérifié.');
 
-        return $this->redirectToRoute('og_security_register');
+        return $this->redirectToRoute('og_webapp_public_index');
     }
 }
