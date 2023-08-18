@@ -1,0 +1,15 @@
+<h1>
+    OpenGaiaCMS<br>
+    <small>Demande de confirmation de votre email</small>
+</h1>
+
+<p>
+    S'il vous
+    En cliquant sur le lien suivant, vous validerez la création de votre compte: <br><br>
+    <a href="{{ signedUrl|raw }}">Confirmez votre Email</a>.
+    Ce lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Merci de rejoindre notre équipe !
+</p>

@@ -11,6 +11,9 @@
         {% endblock %}
     </head>
     <body>
+        {% for flash_success in app.flashes %}
+            <div class="alert alert-danger" role="alert">{{ flash_success }}</div>
+        {% endfor %}
         {% block body %}{% endblock %}
     </body>
 </html>
