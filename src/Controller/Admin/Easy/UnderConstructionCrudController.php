@@ -2,24 +2,14 @@
 
 namespace App\Controller\Admin\Easy;
 
-use App\Entity\Admin\Member;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Entity\Admin\UnderConstruction;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class MemberCrudController extends AbstractCrudController
+class UnderConstructionCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Member::class;
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setEntityLabelInSingular('Membre')
-            ->setEntityLabelInPlural('Membres')
-            // ...
-            ;
+        return UnderConstruction::class;
     }
 
     /*
