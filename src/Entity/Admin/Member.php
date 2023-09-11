@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: MemberRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ORM\HasLifecycleCallbacks]
 class Member implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,6 +32,27 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatarFilename = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatarFilesize = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $avatarFileext = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime')]
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -110,6 +132,94 @@ class Member implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getAvatarFilename(): ?string
+    {
+        return $this->avatarFilename;
+    }
+
+    public function setAvatarFilename(?string $avatarFilename): static
+    {
+        $this->avatarFilename = $avatarFilename;
+
+        return $this;
+    }
+
+    public function getAvatarFilesize(): ?string
+    {
+        return $this->avatarFilesize;
+    }
+
+    public function setAvatarFilesize(?string $avatarFilesize): static
+    {
+        $this->avatarFilesize = $avatarFilesize;
+
+        return $this;
+    }
+
+    public function getAvatarFileext(): ?string
+    {
+        return $this->avatarFileext;
+    }
+
+    public function setAvatarFileext(?string $avatarFileext): static
+    {
+        $this->avatarFileext = $avatarFileext;
+
+        return $this;
+    }
+
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new \DateTime('now');
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
+    {
+        $this->updatedAt = new \DateTime('now');
 
         return $this;
     }

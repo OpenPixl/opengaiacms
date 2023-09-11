@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}First Step Install{% endblock %}
+
+ {% block javascripts %}
+    {{ parent() }}
+     <script>
+         window.onload = function(){
+             const btnStep0 = document.getElementById('btnStep0')
+             const step0 = document.getElementById('step0')
+             const step1 = document.getElementById('step1')
+
+             btnStep0.addEventListener('click', function (event){
+                 step0.classList.add('d-none')
+                 step1.classList.remove('d-none')
+             })
+         }
+     </script>
+ {% endblock %}
+
+{% block header %}
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> Etape 1 : Installation de votre site</a>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="row align-items-center" id="step0">
+            <div class="col-12" >
+                <h1>Création de votre site internet</h1>
+                <h3 class="text-center">Tout d'abord, un grand merci</h3>
+                <p class="text-center">
+                    Un grand merci pour avoir télécharger notre gestionnaire de contenu web (CMS en anglais). <br>
+                    Plus quelques étapes avant de finaliser votre installation et de pouvoir alimenter votre site.
+                </p>
+                <p class="text-center">
+                    Pour cela, armez-vous d'un bon café et de quelques informations utile :<br>
+                    - les éléments de connexion fournis par votre hébergeur: le nom de domaine, l'accès à votre base de données, ...
+                </p>
+                <p class="text-center">
+                    Dès que vous êtes prêt, cliquez sur le bouton ci-dessous.
+                </p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <button id="btnStep0" class="btn btn-sm btn-success w-100">Démarrer la configuration</button>
+                </div>
+            </div>
+        </div>
+        {{ form_start(form) }}
+        <div class="row d-none" id="step1">
+            <div class="col-7 mt-3">
+                <h4>Information générale sur votre site.</h4>
+                <div class="row">
+                    <div class="col-md-8 mb-1">
+                        {{ form_label(form.nameSite) }}
+                        {{ form_widget(form.nameSite) }}
+                    </div>
+                    <div class="col-md-8 mb-1">
+                        {{ form_label(form.slogan) }}
+                        {{ form_widget(form.slogan) }}
+                        {{ form_help(form.slogan)}}
+                    </div>
+                    <div class="col-md-6 mb-1">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                {{ form_label(form.logoFile) }}
+                            </div>
+                            <div class="col-12">
+                                {{ form_widget(form.logoFile) }}
+                                {{ form_help(form.logoFile)}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-1 d-none">
+                        {{ form_label(form.isSupprLogo) }}
+                        {{ form_widget(form.isSupprLogo) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h6>Information de l'hébergeur</h6>
+                    <div class="col-md-8 mb-1">
+                        {{ form_label(form.host) }}
+                        {{ form_widget(form.host) }}
+                    </div>
+                    <div class="col-md-8 mb-1">
+                        {{ form_label(form.dbhost) }}
+                        {{ form_widget(form.dbhost) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-5 mt-3">
+                <h4>Compte administrateur du site</h4>
+                <p>Ces informations seront utiles lors de vos prochaines connexions au site. <br>Veuillez les garder en toute sécurité et ne les communiquez pas même en cas de changement d'administrateur. Dans ce cas vous pourrez créer un compte d'admnistration dans la gestions de utilisateur de la plateforme.</p>
+                <div class="row g-1">
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.webmasterFirstname) }}
+                        {{ form_widget(form.webmasterFirstname) }}
+                    </div>
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.webmasterLastname) }}
+                        {{ form_widget(form.webmasterLastname) }}
+                    </div>
+                    <div class="col-md-12 mb-1">
+                        {{ form_label(form.webmasterMail) }}
+                        {{ form_widget(form.webmasterMail) }}
+                    </div>
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.webmasterPassword.first) }}
+                        {{ form_widget(form.webmasterPassword.first) }}
+                    </div>
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.webmasterPassword.second) }}
+                        {{ form_widget(form.webmasterPassword.second) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-primary w-100">{{ button_label|default('Etape Suivante') }}</button>
+            </div>
+
+        </div>
+        {{ form_widget(form) }}
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('include/install/footer.html.twig') }}
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Tableau de bord</h1>
+                <p>{{ app.user.firstName|capitalize }}, bienvenue sur votre espace de travail.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal %}
+    <section id="modals">
+        <div class="modal fade" id="NewSupport" tabindex="-1" aria-labelledby="NewSupport" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-warning" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="modal-text">Vous êtes sur le point de supprimer l'évènement.</p>
+                        <input type="hidden" id="recipient-name">
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" type="button" class="btn btn-warning jsModalDelProperty" data-bs-dismiss="modal">Supprimer</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

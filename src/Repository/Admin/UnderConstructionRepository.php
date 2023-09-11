@@ -21,6 +21,14 @@ class UnderConstructionRepository extends ServiceEntityRepository
         parent::__construct($registry, UnderConstruction::class);
     }
 
+    Public function findFirstReccurence(){
+        return $this->createQueryBuilder('a')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 //    /**
 //     * @return UnderConstruction[] Returns an array of UnderConstruction objects
 //     */

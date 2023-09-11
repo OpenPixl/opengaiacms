@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Page
 {
     #[ORM\Id]
@@ -30,6 +31,9 @@ class Page
     private ?bool $isPublish = null;
 
     #[ORM\Column]
+    private ?bool $isMenu = false;
+
+    #[ORM\Column]
     private ?bool $isShowTitle = null;
 
     #[ORM\Column]
@@ -50,11 +54,13 @@ class Page
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $cssStyle = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: 'datetime')]
+    private $createdAt;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    #[ORM\Column(type: 'datetime')]
+    private $updatedAt;
+
+
 
     public function getId(): ?int
     {
@@ -117,6 +123,19 @@ class Page
     public function setIsPublish(bool $isPublish): static
     {
         $this->isPublish = $isPublish;
+
+        return $this;
+    }
+
+
+    public function isIsMenu(): ?bool
+    {
+        return $this->isMenu;
+    }
+
+    public function setIsMenu(bool $isMenu): static
+    {
+        $this->isMenu = $isMenu;
 
         return $this;
     }
@@ -205,27 +224,31 @@ class Page
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): self
     {
-        $this->createdAt = $createdAt;
+        $this->createdAt = new \DateTime('now');
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTime('now');
 
         return $this;
     }
+
 }

@@ -13,30 +13,24 @@ class Config
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $nameSite = null;
-
     #[ORM\Column]
     private ?bool $IsOffLine = null;
 
     #[ORM\Column]
     private ?bool $IsInstalled = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $host = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $dbhost = null;
+
+    #[ORM\Column]
+    private ?int $step = 0;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNameSite(): ?string
-    {
-        return $this->nameSite;
-    }
-
-    public function setNameSite(string $nameSite): static
-    {
-        $this->nameSite = $nameSite;
-
-        return $this;
     }
 
     public function isIsOffLine(): ?bool
@@ -59,6 +53,42 @@ class Config
     public function setIsInstalled(bool $IsInstalled): static
     {
         $this->IsInstalled = $IsInstalled;
+
+        return $this;
+    }
+
+   public function getHost(): ?string
+    {
+        return $this->host;
+    }
+
+    public function setHost(?string $host): static
+    {
+        $this->host = $host;
+
+        return $this;
+    }
+
+    public function getDbhost(): ?string
+    {
+        return $this->dbhost;
+    }
+
+    public function setDbhost(?string $dbhost): static
+    {
+        $this->dbhost = $dbhost;
+
+        return $this;
+    }
+
+    public function getStep(): ?int
+    {
+        return $this->step;
+    }
+
+    public function setStep(int $step): static
+    {
+        $this->step = $step;
 
         return $this;
     }

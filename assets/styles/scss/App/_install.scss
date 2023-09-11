@@ -1,0 +1,26 @@
+.install{
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  font-family: "Aileron-light", sans-serif;
+  font-size: 0.9rem;
+  .footer_subtitle{
+    color: #1a1e21;
+  }
+  h1,h2,h3,h4,h5,h6{
+    font-family: "Aileron-regular", sans-serif;
+    margin-bottom: 0.5rem;
+  }
+  hr{
+    width: 125px;
+    height: 10px;
+    color: gray;
+    margin:0.2rem 0;
+  }
+  #rsfollow
+  {
+    background-color: #21d191;
+    color: $white;
+    height: 60px;
+  }
+}

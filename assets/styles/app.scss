@@ -1,0 +1,11 @@
+$white : #ffffff;
+$background-image: url('../images/fond_login.jpeg');
+/** Import des fichiers bootstrap **/
+@import "~bootstrap/scss/bootstrap";
+/** Import des fichiers du template de base **/
+@import "scss/App/install";
+//@import "scss/App/login";
+//*** ------------- Import fonts ---------------- ***//
+@import "scss/mixins/fontface";
+@include fontface('Aileron-regular', '../../fonts/aileron/aileron-regular', 500, normal);
+@include fontface('Aileron-light', '../../fonts/aileron/aileron-light', 300, normal);
