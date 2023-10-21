@@ -25,9 +25,12 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/logout', name: 'og_security_login_out', methods: ['POST'])]
-    public function logout(Security $security): never
+    #[Route('/logout', name: 'og_security_login_out')]
+    public function logout(Security $security)
     {
+        /// logout the user in on the current firewall
         $response = $security->logout();
+
+        return $this->redirectToRoute('og_webapp_public_index');
     }
 }

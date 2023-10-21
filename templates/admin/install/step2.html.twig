@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}First Step Install{% endblock %}
+
+ {% block javascripts %}
+    {{ parent() }}
+     <script>
+         window.onload = function(){
+
+         }
+     </script>
+ {% endblock %}
+
+{% block header %}
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> Etape 2 : Configuration de la page d'attente.</a>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+    <section class="container">
+        {{ form_start(form) }}
+        <div class="row" id="step1">
+            <div class="col-12 mt-3">
+                <h4>Completez les information pour votre page "En cours de construction".</h4>
+                <p>
+                    Après cette étape, votre site sera en ligne.<br>
+                    Bien sur, à ce stade, vous n'avez créer aucun contenus et aucune pages. Les visiteurs souhaitant découvrir vos activités seront perdu. Durant cette étape, nous vous invitons à renseigner les champs ci-dessous pour mettre en place une page intermédiaire, le temps que vous finilisiez votre site.
+                </p>
+                <div class="row">
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.title1) }}
+                        {{ form_widget(form.title1) }}
+                    </div>
+                    <div class="col-md-6 mb-1">
+                        {{ form_label(form.title2) }}
+                        {{ form_widget(form.title2) }}
+                    </div>
+                    <div class="col-md-12 mb-1">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <div class="col-md-12 mb-1">
+                        {{ form_label(form.content) }}
+                        {{ form_widget(form.content) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h6>Contacts</h6>
+                    <div class="col-md-4 mb-1">
+                        {{ form_label(form.contactPhone) }}
+                        {{ form_widget(form.contactPhone) }}
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        {{ form_label(form.contactMail) }}
+                        {{ form_widget(form.contactMail) }}
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h6>Lien vers vos réseaux sociaux</h6>
+                    <div class="col-md-3 mb-1">
+                        {{ form_label(form.contactFb) }}
+                        {{ form_widget(form.contactFb) }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form_label(form.contactInst) }}
+                        {{ form_widget(form.contactInst) }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form_label(form.contactMasto) }}
+                        {{ form_widget(form.contactMasto) }}
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        {{ form_label(form.contactXtweet) }}
+                        {{ form_widget(form.contactXtweet) }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-2">
+                <button class="btn btn-sm btn-primary w-100">{{ button_label|default('Etape Suivante') }}</button>
+            </div>
+
+        </div>
+        {{ form_widget(form) }}
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {{ include('include/install/footer.html.twig') }}
+{% endblock %}

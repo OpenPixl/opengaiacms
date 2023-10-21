@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ path('op_admin_dashboard_index') }}">
+            {% if application.logoFilename %}
+                <img class="img-fluid" src="{{ asset('images/application/') ~ application.logoFilename }}" alt="Logo Papsimmo" style="max-width: 40px;">                 - SoftPAPs
+            {% else %}
+                <img class="img-fluid" src="{{ asset('images/png/Logo_OpenPixl.png') }}" alt="{{ application.nameSite }}" width="40px"> - OpenGaiaCMS
+            {% endif %}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="https://pro1.mail.ovh.net/owa/auth/logon.aspx?replaceCurrent=1&url=https%3a%2f%2fpro1.mail.ovh.net%2fowa%2f" onclick="window.open(this.href); return false;"><i class="fa-duotone fa-browser"></i> Ma messagerie</a>
+                </li>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('og_webapp_public_homepage') }}" onclick="window.open(this.href); return false;"><i class="fa-duotone fa-browser"></i> Voir le site</a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ app.user.firstName }} {{ app.user.lastName }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('og_security_login_out') }}">Déconnexion</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        {# <li><a class="dropdown-item" href="{{ path('og_admin_employed_edit', {'id': app.user.id}) }}">Mon compte</a></li> #}
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
