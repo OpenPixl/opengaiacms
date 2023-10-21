@@ -1,11 +1,11 @@
 <div id="side" class="float-start">
     <div class="container" id="bloc_avatar">
-        <div class="row">
-            <div class="col">
+        <div class="row justify-content-center mt-2 mb-2">
+            <div class="col-10">
                 {% if app.user.avatarFilename is not null %}
-                    <img class="img-fluid rounded-circle" src="{{asset('images/admin/avatar/')}}{{app.user.avatarFilename}}" alt="{{app.user.avatarFilename}}" style="width:165px;height:165px; object-fit: cover;">
+                    <img class="img-fluid rounded-circle" src="{{asset('images/admin/avatar/')}}{{app.user.avatarFilename}}" alt="{{app.user.avatarFilename}}" style="width:140px;height:140px; object-fit: cover;">
                 {% else %}
-                    <img class="img-fluid rounded-circle" src="{{ asset('images/jpg/user.jpg') }}" style="width:165px;height:165px; object-fit: cover;">
+                    <img class="img-fluid rounded-circle" src="{{ asset('images/jpg/user.jpg') }}" style="width:140px;height:140px; object-fit: cover;">
                 {% endif%}
                 <p class="text-center">{{ app.user.firstName }} {{ app.user.lastName }}</p>
             </div>
@@ -15,11 +15,11 @@
     <div class="menu-items">
         <h6>WEB</h6>
         <ul>
-            {#
-            <li><a href="{{ path('op_webapp_page_index') }}" class="{% if app.request.attributes.get("_route") == 'op_webapp_page_index' or app.request.attributes.get("_route") == 'op_webapp_page_edit'%}active{% endif %}"><i class="fa-duotone fa-pager"></i> Pages</a></li>
-            <li><a href="{{ path('op_webapp_articles_index') }}" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_index' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Articles</a></li>
-            <li><a href="{{ path('op_webapp_articles_actualites') }}" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_actualites' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Actualités</a></li>
-            #}
+
+            <li><a href="{{ path('og_webapp_page_index') }}" class="{% if app.request.attributes.get("_route") == 'op_webapp_page_index' or app.request.attributes.get("_route") == 'op_webapp_page_edit'%}active{% endif %}"><i class="fa-duotone fa-pager"></i> Pages</a></li>
+            <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_index' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Articles</a></li>
+            <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_actualites' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Actualités</a></li>
+
         </ul>
     </div>
     {% endif %}
@@ -27,11 +27,11 @@
     <div class="menu-items">
         <h6>APPLICATION</h6>
         <ul>
-            {#
-            <li><a href="{{ path('op_admin_contact_index') }}" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-message-code"></i> Contacts mails</a></li>
-            <li><a href="{{ path('op_admin_employed_index') }}" class="{% if app.request.attributes.get("_route") == 'op_admin_employed_index' or app.request.attributes.get("_route") == 'op_admin_employed_show' or app.request.attributes.get("_route") == 'op_admin_employed_edit'%}active{% endif %}"><i class="fa-duotone fa-users"></i> Membres de Paps</a></li>
-            <li><a href="{{ path('op_admin_application_edit', {'id':1}) }}" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-gear"></i> Paramètres</a></li>
-            #}
+
+            <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-message-code"></i> Contacts mails</a></li>
+            <li><a href="{{ path('og_admin_member_index')}}" class="{% if app.request.attributes.get("_route") == 'og_admin_member_index' or app.request.attributes.get("_route") == 'op_admin_member_show' or app.request.attributes.get("_route") == 'op_admin_member_edit'%}active{% endif %}"><i class="fa-duotone fa-users"></i> Membres</a></li>
+            <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-gear"></i> Paramètres</a></li>
+
         </ul>
     </div>
     {% endif %}

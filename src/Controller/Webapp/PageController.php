@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/webapp/page')]
 class PageController extends AbstractController
 {
-    #[Route('/', name: 'app_webapp_page_index', methods: ['GET'])]
+    #[Route('/', name: 'og_webapp_page_index', methods: ['GET'])]
     public function index(PageRepository $pageRepository): Response
     {
         return $this->render('webapp/page/index.html.twig', [
@@ -22,27 +22,41 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_webapp_page_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'og_webapp_page_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $page = new Page();
-        $form = $this->createForm(PageType::class, $page);
+        $form = $this->createForm(PageType::class, $page, [
+            'action' => $this->generateUrl('og_webapp_page_new'),
+            'method' => 'POST',
+            'attr' => ['class'=>'formAddPage']
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($page);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
+            //return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
+            return $this->json([
+                'code' => 200,
+                'message' => 'La page a été crée avec success.',
+            ], 200);
         }
 
-        return $this->render('webapp/page/new.html.twig', [
+        $view = $this->render('webapp/page/_form.html.twig', [
             'page' => $page,
-            'form' => $form,
+            'form' => $form
+        ]);
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'formulaire présenté',
+            'formView' => $view->getContent()
         ]);
     }
 
-    #[Route('/{id}', name: 'app_webapp_page_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'og_webapp_page_show', methods: ['GET'])]
     public function show(Page $page): Response
     {
         return $this->render('webapp/page/show.html.twig', [
@@ -50,7 +64,7 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_webapp_page_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'og_webapp_page_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Page $page, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PageType::class, $page);
@@ -68,7 +82,7 @@ class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_webapp_page_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'og_webapp_page_delete', methods: ['POST'])]
     public function delete(Request $request, Page $page, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {

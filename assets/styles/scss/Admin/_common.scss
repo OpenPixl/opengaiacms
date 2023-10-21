@@ -1,0 +1,42 @@
+$width-side-small: 4rem;
+$width-side-large: 12rem;
+$width-content-small : calc(100% - 4rem);
+$width-content-large: calc(100% - 12rem);
+
+body{
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  h1, h2, h3, h4, h5, h6
+  {
+    font-family: aileronregular, sans-serif;
+    font-size: 1rem;
+  }
+  p, a{
+    font-family: aileronlight, sans-serif;
+    font-size: 0.8rem;
+  }
+
+  main{
+    #side{
+      width: $width-side-large;
+      height:100%
+    }
+    #content{
+      width: $width-content-large;
+      height:100%;
+      .breadcrumb{
+      }
+      nav{
+        ul{
+          li{
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+
+}

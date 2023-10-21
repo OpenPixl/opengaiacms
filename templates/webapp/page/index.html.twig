@@ -1,25 +1,77 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Page index{% endblock %}
 
-{% block body %}
-    <h1>Page index</h1>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function() {
+            const addNewPage = document.getElementById('addNewPage')
+            const modalAddPage = document.getElementById('modalPage')
+            modalAddPage.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var button = event.relatedTarget
+                // extraction de la variable
+                var recipient = button.getAttribute('data-bs-whatever')
+                // mise à jour du lien de soumission du formulaire.
+
+                axios
+                    .get('/webapp/page/new')
+                    .then(function (response) {
+                        const form = document.getElementById('ModalBodyPage').innerHTML = response.data.formView;
+                    })
+                let modalHeaderH5 = modalAddPage.querySelector('.modal-title')
+                modalHeaderH5.textContent = "Ajout d'une page au site"
+                var modalContent = modalAddPage.querySelector('.modal-footer')
+                var modalSubmit = modalAddPage.querySelector('.modal-footer a')
+                modalSubmit.href = '/gestapp/customer/addcustomerjson/' + recipient
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="row d-flex justify-content-between">
+        <div class="col-sm-12">
+            <h1>PAGES - Liste des pages</h1>
+        </div>
+    </div>
+
+    <div class="navigation d-flex justify-content-between">
+        <div class="mb-1">
+            <button id="addNewPage" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalPage">Ajouter une page</button>
+            <a class="btn btn-sm btn-outline-warning" id="SupprRows" href="">Archiver les pages sélectionnés</a>
+        </div>
+        <div id="blockPagination">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item disabled">
+                        <span class="page-link">«&nbsp;Précédent</span>
+                    </li>
+                    <li class="page-item active">
+                        <span class="page-link">1</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/gestapp/property/?page=2">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/gestapp/property/?page=3">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" rel="next" href="/gestapp/property/?page=2">Suivant&nbsp;»</a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Slug</th>
-                <th>Subtitle</th>
-                <th>State</th>
-                <th>IsPublish</th>
-                <th>IsShowTitle</th>
-                <th>IsShowDate</th>
-                <th>IsShowDescription</th>
-                <th>CssId</th>
-                <th>CssName</th>
-                <th>CssStyle</th>
+                <th></th>
+                <th>Titre</th>
+                <th>Publiée</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
                 <th>actions</th>
@@ -28,18 +80,11 @@
         <tbody>
         {% for page in pages %}
             <tr>
-                <td>{{ page.id }}</td>
-                <td>{{ page.name }}</td>
-                <td>{{ page.slug }}</td>
-                <td>{{ page.subtitle }}</td>
-                <td>{{ page.state }}</td>
+                <td></td>
+                <td>{{ page.name }}<br>{{ page.slug }}</td>
+                <td></td>
                 <td>{{ page.isPublish ? 'Yes' : 'No' }}</td>
-                <td>{{ page.isShowTitle ? 'Yes' : 'No' }}</td>
-                <td>{{ page.IsShowDate ? 'Yes' : 'No' }}</td>
-                <td>{{ page.IsShowDescription ? 'Yes' : 'No' }}</td>
-                <td>{{ page.cssId }}</td>
-                <td>{{ page.cssName }}</td>
-                <td>{{ page.cssStyle }}</td>
+
                 <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
@@ -55,5 +100,25 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_webapp_page_new') }}">Create new</a>
+{% endblock %}
+
+{% block modals %}
+    {{ parent() }}
+    <!-- Edition d'un vendeur sur un bien -->
+    <div class="modal fade" id="modalPage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="ModalBodyPage" class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <a id="btnAddCustomer" class="btn btn-sm btn-primary editCustomer" data-bs-dismiss="modal">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

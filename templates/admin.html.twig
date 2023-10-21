@@ -6,10 +6,12 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             {{ encore_entry_link_tags('admin') }}
+            <link rel="stylesheet" href="https://kit.fontawesome.com/1fb9149f4c.css" crossorigin="anonymous">
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('admin') }}
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         {% endblock %}
     </head>
     {% set route_name = app.request.attributes.get('_route') %}
@@ -26,11 +28,7 @@
             <div id="content" class="float-end">
                 <div class="container-fluid">
                     <section id="content_breadcumb" class="mt-3">
-                        {% block breadcrumb %}
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item active"><a href="{{ path('op_admin_dashboard_index') }}"><i class="fa-duotone fa-house-blank"></i> Tableau de Bord</a></li>
-                            </ol>
-                        {% endblock %}
+                        {% include('include/admin/breadcrumb.html.twig') %}
                     </section>
                     <section id="content_header">
                         {% block contenttitle %}{% endblock %}
@@ -45,11 +43,11 @@
                     </section>
                 </div>
             </div>
+            {% block modals %}{% endblock %}
         </main>
         <footer>
             {% block footer %}{% endblock %}
         </footer>
 
-        {% block body %}{% endblock %}
     </body>
 </html>

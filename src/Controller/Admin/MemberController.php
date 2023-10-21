@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin/member')]
 class MemberController extends AbstractController
 {
-    #[Route('/', name: 'app_admin_member_index', methods: ['GET'])]
+    #[Route('/', name: 'og_admin_member_index', methods: ['GET'])]
     public function index(MemberRepository $memberRepository): Response
     {
         return $this->render('admin/member/index.html.twig', [
