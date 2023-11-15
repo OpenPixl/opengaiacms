@@ -6,26 +6,119 @@
     {{ parent() }}
     <script>
         window.onload = function() {
-            const addNewPage = document.getElementById('addNewPage')
-            const modalAddPage = document.getElementById('modalPage')
-            modalAddPage.addEventListener('show.bs.modal', function (event) {
+            const modalPage = document.getElementById('modalPage')
+            modalPage.addEventListener('show.bs.modal', function (event) {
                 // Button that triggered the modal
-                var button = event.relatedTarget
+                let button = event.relatedTarget
                 // extraction de la variable
-                var recipient = button.getAttribute('data-bs-whatever')
-                // mise à jour du lien de soumission du formulaire.
-
-                axios
-                    .get('/webapp/page/new')
-                    .then(function (response) {
-                        const form = document.getElementById('ModalBodyPage').innerHTML = response.data.formView;
-                    })
-                let modalHeaderH5 = modalAddPage.querySelector('.modal-title')
-                modalHeaderH5.textContent = "Ajout d'une page au site"
-                var modalContent = modalAddPage.querySelector('.modal-footer')
-                var modalSubmit = modalAddPage.querySelector('.modal-footer a')
-                modalSubmit.href = '/gestapp/customer/addcustomerjson/' + recipient
+                let recipient = button.getAttribute('data-bs-whatever')
+                let crud = recipient.split('-')[0]
+                let contentTitle = recipient.split('-')[1]
+                let id = recipient.split('-')[2]
+                let namePage = recipient.split('-')[3]
+                if(crud === 'ADD'){
+                    // mise à jour du lien de soumission du formulaire.
+                    axios
+                        .get('/webapp/page/new')
+                        .then(function (response) {
+                            const form = document.getElementById('ModalBodyPage').innerHTML = response.data.formView;
+                        })
+                    let modalHeaderH5 = modalPage.querySelector('.modal-title')
+                    modalHeaderH5.textContent = contentTitle
+                    let modalContent = modalPage.querySelector('.modal-footer')
+                    let modalSubmit = modalPage.querySelector('.modal-footer a')
+                }else if(crud === 'EDIT'){
+                    // mise à jour du lien de soumission du formulaire.
+                    axios
+                        .get('/webapp/page/'+ id +'/edit')
+                        .then(function (response) {
+                            const form = document.getElementById('ModalBodyPage').innerHTML = response.data.formView;
+                        })
+                    let modalHeaderH5 = modalPage.querySelector('.modal-title')
+                    modalHeaderH5.textContent = contentTitle
+                    let modalContent = modalPage.querySelector('.modal-footer')
+                    let modalSubmit = modalPage.querySelector('.modal-footer a')
+                    modalSubmit.innerHTML= '<i class="fa-duotone fa-pen-to-square"></i> Modifier'
+                }
+                else if(crud === 'DEL'){
+                    // mise à jour du lien de soumission du formulaire.
+                    let modalDialog = modalPage.querySelector('.modal-dialog')
+                    modalDialog.classList.remove("modal-xl")
+                    let modalHeader = modalPage.querySelector('.modal-header')
+                    modalHeader.innerHTML = '<h5 class="modal-title text-danger">'+contentTitle+'</h5>'
+                    let modalContent = modalPage.querySelector('.modal-body')
+                    modalContent.innerHTML =
+                        '<p>Vous êtes sur le point de supprimer la page : <b>'+namePage+'</b>.</p>' +
+                        '<p>En cliquant sur le bouton "Supprimer", la page sera difinitivement effacée. Est-vous sur de continuer ?</p>'
+                    let modalSubmit = modalPage.querySelector('.modal-footer a')
+                    modalSubmit.classList.remove("btn-primary")
+                    modalSubmit.removeEventListener('click', submitFormPage)
+                    modalSubmit.classList.add("btn-danger")
+                    modalSubmit.innerHTML= '<i class="fa-duotone fa-trash-can-check"></i> Supprimer'
+                    modalSubmit.removeAttribute('href')
+                    modalSubmit.href = '/webapp/page/'+id+'/del'
+                }
             })
+
+            // fonction d'envoi de la fiche Client vers son controller
+            function submitFormPage(event){
+                event.preventDefault()
+                let FormPage = document.querySelector('.formPage')
+                let urlPageController = FormPage.action
+                let dataPage = new FormData(FormPage)
+                axios
+                    .post(urlPageController, dataPage)
+                    .then(function(response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste
+                        // Code pour recharger les events
+                        // -----------------------------------------------------------
+                        // Ajout d'un évènement sur le click du selecteur EditCustomer
+                        document.querySelectorAll('a.submitFormPage').forEach(function (link) {
+                            link.addEventListener('click', submitFormPage);
+                        })
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+
+            document.getElementById('aDeletePage').addEventListener('click', delPage)
+            document.querySelector('a.submitFormPage').addEventListener('click', submitFormPage)
+
+            function delPage(event){
+                event.preventDefault()
+                let href = this.href
+                axios
+                    .post(href)
+                    .then(function(response){
+                        document.getElementById('liste').innerHTML = response.data.liste
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+
+            modalPage.addEventListener('hide.bs.modal', function (event) {
+                let modalDialog = modalPage.querySelector('.modal-dialog')
+                modalDialog.classList.add("modal-xl")
+                // Ajout d'un évènement sur le click du selecteur EditCustomer
+                document.querySelector('a.submitFormPage').removeEventListener('click', delPage)
+                document.querySelector('a.submitFormPage').addEventListener('click', submitFormPage)
+            })
+
+            // Ajout d'un évènement sur le click du selecteur EditCustomer
+            document.querySelectorAll('a.submitFormPage').forEach(function (link) {
+                link.addEventListener('click', submitFormPage);
+            })
+
+
+            // complétion du champ SEO Title
+            const title = document.getElementById('page_name')
+            if(title !== null){
+                title.addEventListener('input', function(event){
+                    document.getElementById('seoTitle').setAttribute('value', title.value);
+                })
+            }
         }
     </script>
 {% endblock %}
@@ -39,12 +132,12 @@
 
     <div class="navigation d-flex justify-content-between">
         <div class="mb-1">
-            <button id="addNewPage" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalPage">Ajouter une page</button>
+            <button id="addNewPage" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalPage" data-bs-whatever="ADD-Ajout d'une page au site-0">Ajouter une page</button>
             <a class="btn btn-sm btn-outline-warning" id="SupprRows" href="">Archiver les pages sélectionnés</a>
         </div>
         <div id="blockPagination">
             <nav>
-                <ul class="pagination">
+                <ul class="pagination pagination-sm">
                     <li class="page-item disabled">
                         <span class="page-link">«&nbsp;Précédent</span>
                     </li>
@@ -65,40 +158,10 @@
 
         </div>
     </div>
+    <div id="liste">
+        {% include('webapp/page/include/_liste.html.twig') %}
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Titre</th>
-                <th>Publiée</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for page in pages %}
-            <tr>
-                <td></td>
-                <td>{{ page.name }}<br>{{ page.slug }}</td>
-                <td></td>
-                <td>{{ page.isPublish ? 'Yes' : 'No' }}</td>
-
-                <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_webapp_page_show', {'id': page.id}) }}">show</a>
-                    <a href="{{ path('app_webapp_page_edit', {'id': page.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="15">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
 {% endblock %}
 
@@ -116,7 +179,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <a id="btnAddCustomer" class="btn btn-sm btn-primary editCustomer" data-bs-dismiss="modal">Ajouter</a>
+                    <a id="aDeletePage" class="btn btn-sm btn-primary submitFormPage" data-bs-dismiss="modal">Ajouter</a>
                 </div>
             </div>
         </div>

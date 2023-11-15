@@ -9,10 +9,16 @@ body{
   grid-template-rows: auto 1fr auto;
   overflow-x: hidden;
   overflow-y: hidden;
-  h1, h2, h3, h4, h5, h6
+  h1, h2, h3, h4
   {
     font-family: aileronregular, sans-serif;
+    font-size: 1.1rem;
+  }
+  h5, h6
+  {
+    font-family: aileronlight, sans-serif;
     font-size: 1rem;
+    margin-top: 0.5rem;
   }
   p, a{
     font-family: aileronlight, sans-serif;

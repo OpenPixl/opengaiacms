@@ -1,0 +1,36 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="AllCheckbox" name="AllCheckbox"></th>
+        <th>Titre</th>
+        <th>Etat</th>
+        <th>CreatedAt</th>
+        <th>UpdatedAt</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for page in pages %}
+        <tr class="align-middle">
+            <td>
+                <input type="checkbox" id="CheckProperty" name="CheckProperty" value="{{ page.id }}">
+            </td>
+            <td class="">{{ page.name }}<br>{{ page.slug }}</td>
+            <td>
+                {% if page.state == "draft" %}Brouillon{% elseif page.state == "in_corrected" %}En cours de validation{% else %}Publiée{% endif %}
+            </td>
+            <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            <td>
+                <a href="{{ path('og_webapp_page_show', {'id': page.id}) }}">show</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('og_webapp_page_edit', {'id': page.id}) }}" data-bs-toggle="modal" data-bs-target="#modalPage" data-bs-whatever="EDIT-Paramètres de la page-{{ page.id }}"><i class="fa-duotone fa-gear"></i></a>
+                <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalPage" data-bs-whatever="DEL-Suppression de la page-{{ page.id }}-{{ page.name }}"><i class="fa-duotone fa-trash-can"></i></a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="15">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

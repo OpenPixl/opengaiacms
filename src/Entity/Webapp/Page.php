@@ -28,9 +28,6 @@ class Page
     private ?string $state = null;
 
     #[ORM\Column]
-    private ?bool $isPublish = null;
-
-    #[ORM\Column]
     private ?bool $isMenu = false;
 
     #[ORM\Column]
@@ -60,7 +57,17 @@ class Page
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    #[ORM\Column(length: 255)]
+    private ?string $seoTitle = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $seoDescription = null;
+
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $seoKeywords = null;
+
+    #[ORM\ManyToOne]
+    private ?Pagechoice $pagechoice = null;
 
     public function getId(): ?int
     {
@@ -114,19 +121,6 @@ class Page
 
         return $this;
     }
-
-    public function isIsPublish(): ?bool
-    {
-        return $this->isPublish;
-    }
-
-    public function setIsPublish(bool $isPublish): static
-    {
-        $this->isPublish = $isPublish;
-
-        return $this;
-    }
-
 
     public function isIsMenu(): ?bool
     {
@@ -251,4 +245,51 @@ class Page
         return $this;
     }
 
+    public function getSeoTitle(): ?string
+    {
+        return $this->seoTitle;
+    }
+
+    public function setSeoTitle(string $seoTitle): static
+    {
+        $this->seoTitle = $seoTitle;
+
+        return $this;
+    }
+
+    public function getSeoDescription(): ?string
+    {
+        return $this->seoDescription;
+    }
+
+    public function setSeoDescription(?string $seoDescription): static
+    {
+        $this->seoDescription = $seoDescription;
+
+        return $this;
+    }
+
+    public function getSeoKeywords(): ?array
+    {
+        return $this->seoKeywords;
+    }
+
+    public function setSeoKeywords(?array $seoKeywords): static
+    {
+        $this->seoKeywords = $seoKeywords;
+
+        return $this;
+    }
+
+    public function getPagechoice(): ?Pagechoice
+    {
+        return $this->pagechoice;
+    }
+
+    public function setPagechoice(?Pagechoice $pagechoice): static
+    {
+        $this->pagechoice = $pagechoice;
+
+        return $this;
+    }
 }

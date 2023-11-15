@@ -23,13 +23,13 @@ class PageController extends AbstractController
     }
 
     #[Route('/new', name: 'og_webapp_page_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, PageRepository $pageRepository): Response
     {
         $page = new Page();
         $form = $this->createForm(PageType::class, $page, [
             'action' => $this->generateUrl('og_webapp_page_new'),
             'method' => 'POST',
-            'attr' => ['class'=>'formAddPage']
+            'attr' => ['class'=>'formPage']
         ]);
         $form->handleRequest($request);
 
@@ -37,10 +37,15 @@ class PageController extends AbstractController
             $entityManager->persist($page);
             $entityManager->flush();
 
+            $pages = $pageRepository->findAll();
+
             //return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
             return $this->json([
                 'code' => 200,
                 'message' => 'La page a été crée avec success.',
+                'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                    'pages' => $pages
+                ])
             ], 200);
         }
 
@@ -65,20 +70,56 @@ class PageController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'og_webapp_page_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Page $page, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Page $page, EntityManagerInterface $entityManager, PageRepository $pageRepository): Response
     {
-        $form = $this->createForm(PageType::class, $page);
+        $form = $this->createForm(PageType::class, $page, [
+            'action' => $this->generateUrl('og_webapp_page_edit', ['id' => $page->getId()]),
+            'method' => 'POST',
+            'attr' => ['class'=>'formPage']
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
+            $pages = $pageRepository->findAll();
+
+            //return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
+            return $this->json([
+                'code' => 200,
+                'message' => 'La page a été crée avec success.',
+                'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                    'pages' => $pages
+                ])
+            ], 200);
         }
 
-        return $this->render('webapp/page/edit.html.twig', [
+        $view = $this->render('webapp/page/_form.html.twig', [
             'page' => $page,
-            'form' => $form,
+            'form' => $form
+        ]);
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'formulaire présenté',
+            'formView' => $view->getContent()
+        ]);
+    }
+
+    #[Route('/{id}/del', name: 'og_webapp_page_dell', methods: ['POST'])]
+    public function del(Request $request, Page $page, EntityManagerInterface $entityManager, PageRepository $pageRepository): Response
+    {
+        $entityManager->remove($page);
+        $entityManager->flush();
+
+        $pages = $pageRepository->findAll();
+
+        return $this->json([
+            'code' => 200,
+            'message' => 'formulaire présenté',
+            'liste' => $this->renderView('webapp/page/include/_liste.html.twig', [
+                'pages' => $pages
+            ])
         ]);
     }
 
@@ -92,4 +133,5 @@ class PageController extends AbstractController
 
         return $this->redirectToRoute('app_webapp_page_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
