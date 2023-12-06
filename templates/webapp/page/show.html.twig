@@ -1,74 +1,124 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Page{% endblock %}
 
-{% block body %}
-    <h1>Page</h1>
+{% block contenttitle %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ page.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ page.name }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ page.slug }}</td>
-            </tr>
-            <tr>
-                <th>Subtitle</th>
-                <td>{{ page.subtitle }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ page.state }}</td>
-            </tr>
-            <tr>
-                <th>IsPublish</th>
-                <td></td>
-            </tr>
-            <tr>
-                <th>IsShowTitle</th>
-                <td>{{ page.isShowTitle ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>IsShowDate</th>
-                <td>{{ page.IsShowDate ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>IsShowDescription</th>
-                <td>{{ page.IsShowDescription ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CssId</th>
-                <td>{{ page.cssId }}</td>
-            </tr>
-            <tr>
-                <th>CssName</th>
-                <td>{{ page.cssName }}</td>
-            </tr>
-            <tr>
-                <th>CssStyle</th>
-                <td>{{ page.cssStyle }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% endblock %}
 
-    <a href="{{ path('og_webapp_page_index') }}">back to list</a>
+{% block content %}
 
-    <a href="{{ path('og_webapp_page_edit', {'id': page.id}) }}">edit</a>
+    <div class="row">
+        <div class="col-3">
+            <div class="row">
+                <div class="col-12">
+                    <h1>{{ page.name }}</h1>
+                    <h3 class="small">{{ page.subtitle }}</h3>
+                </div>
+            </div>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ page.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ page.name }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ page.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Subtitle</th>
+                    <td>{{ page.subtitle }}</td>
+                </tr>
+                <tr>
+                    <th>State</th>
+                    <td>{{ page.state }}</td>
+                </tr>
+                <tr>
+                    <th>IsPublish</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>IsShowTitle</th>
+                    <td>{{ page.isShowTitle ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>IsShowDate</th>
+                    <td>{{ page.IsShowDate ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>IsShowDescription</th>
+                    <td>{{ page.IsShowDescription ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>CssId</th>
+                    <td>{{ page.cssId }}</td>
+                </tr>
+                <tr>
+                    <th>CssName</th>
+                    <td>{{ page.cssName }}</td>
+                </tr>
+                <tr>
+                    <th>CssStyle</th>
+                    <td>{{ page.cssStyle }}</td>
+                </tr>
+                <tr>
+                    <th>CreatedAt</th>
+                    <td>{{ page.createdAt ? page.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>UpdatedAt</th>
+                    <td>{{ page.updatedAt ? page.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between">
+                <div class="">
+                    <a class="btn btn-sm btn-outline-dark" href="{{ path('og_webapp_page_index') }}"><i class="fa-sharp fa-light fa-chevrons-left"></i> retour</a>
+                    <a class="btn btn-sm btn-outline-dark" href="{{ path('og_webapp_page_edit', {'id': page.id}) }}"><i class="fa-sharp fa-light fa-pen"></i> Editer</a>
+                </div>
+                <div>
+                    {{ include('webapp/page/_delete_form.html.twig') }}
+                </div>
+            </div>
 
-    {{ include('webapp/page/_delete_form.html.twig') }}
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col-12" id="pageTools">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addBlock">
+                        <i class="fa-regular fa-layer-plus"></i> Ajouter un block
+                    </button>
+
+                </div>
+                <div class="col-12" id="pageBuild">
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modals %}
+    <div class="modal fade" id="addBlock" tabindex="-1" aria-labelledby="addBlock" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Choix des blocs pour votre page</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

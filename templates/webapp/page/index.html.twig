@@ -6,6 +6,7 @@
     {{ parent() }}
     <script>
         window.onload = function() {
+
             const modalPage = document.getElementById('modalPage')
             modalPage.addEventListener('show.bs.modal', function (event) {
                 // Button that triggered the modal
@@ -60,7 +61,7 @@
                 }
             })
 
-            // fonction d'envoi de la fiche Client vers son controller
+            // fonction d'envoi de la page vers son controller
             function submitFormPage(event){
                 event.preventDefault()
                 let FormPage = document.querySelector('.formPage')
@@ -114,10 +115,9 @@
 
             // complétion du champ SEO Title
             const title = document.getElementById('page_name')
-            if(title !== null){
-                title.addEventListener('input', function(event){
-                    document.getElementById('seoTitle').setAttribute('value', title.value);
-                })
+            let titleSEO = document.getElementById('page_seoTitle')
+            if(title !== null) {
+                console.log('Ok')
             }
         }
     </script>

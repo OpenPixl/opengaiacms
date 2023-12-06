@@ -3,6 +3,7 @@
 namespace App\Entity\Webapp;
 
 use App\Repository\Webapp\PageRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +19,7 @@ class Page
     #[ORM\Column(length: 100)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 100, nullable: true)]
+    #[ORM\Column(length: 100)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 100, nullable: true)]
@@ -68,6 +69,14 @@ class Page
 
     #[ORM\ManyToOne]
     private ?Pagechoice $pagechoice = null;
+
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function initializeSlug() {
+        $slugify = new Slugify();
+        $this->slug = $slugify->slugify($this->name);
+    }
 
     public function getId(): ?int
     {

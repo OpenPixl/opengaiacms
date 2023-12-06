@@ -17,10 +17,15 @@
     color: gray;
     margin:0.2rem 0;
   }
+#footer_install{
+  font-size: 0.8rem;
   #rsfollow
   {
-    background-color: #21d191;
+    background: rgb(107,200,232);
+    background: linear-gradient(90deg, rgba(107,200,232,1) 0%, rgba(15,115,127,1) 100%);
     color: $white;
     height: 60px;
   }
+}
+
 }
