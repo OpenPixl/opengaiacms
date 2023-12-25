@@ -1,0 +1,20 @@
+<p>Block index</p>
+<div class="row">
+    {% for block in blocks %}
+        <div class="col-2 g-1">
+            <div id="modal-card" class="card">
+                <img src="{{ asset('images/svg/icones/' ~ block.slug ~ '.svg')  }}" alt="" class="card-img-top">
+                <div class="card-body">
+
+                    <p class="text-center">{{ block.name }}</p>
+                    <a href="#" class="stretched-link"></a>
+                </div>
+            </div>
+
+        </div>
+    {% else %}
+        <div class="col-12">
+            pas de blocks disponible
+        </div>
+    {% endfor %}
+</div>

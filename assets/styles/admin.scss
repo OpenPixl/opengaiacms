@@ -3,14 +3,15 @@ $secondary-color: #2a565f;
 
 $side-small: 4rem;
 $side-large: 12rem;
-@import "~bootstrap/scss/bootstrap";
 //*** ------------- Import des fichiers du template de base ------------- **/
 @import "scss/Admin/common";
 @import "scss/Admin/aside";
 @import "scss/Admin/table";
 @import "scss/Admin/navbar";
+@import "scss/Admin/modal";
 @import "scss/Admin/form";
 //*** ------------- Import fonts ---------------- ***//
+@import "~bootstrap/scss/bootstrap";
 @import "scss/mixins/fontface";
 @include fontface('Aileron-regular', '../../fonts/aileron/aileron-regular', 500, normal);
 @include fontface('Aileron-light', '../../fonts/aileron/aileron-light', 300, normal);

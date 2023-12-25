@@ -90,7 +90,7 @@
         <div class="col-9">
             <div class="row">
                 <div class="col-12" id="pageTools">
-                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addBlock">
+                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalBlock">
                         <i class="fa-regular fa-layer-plus"></i> Ajouter un block
                     </button>
 
@@ -103,15 +103,15 @@
     </div>
 {% endblock %}
 {% block modals %}
-    <div class="modal fade" id="addBlock" tabindex="-1" aria-labelledby="addBlock" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="modalBlock" tabindex="-1" aria-labelledby="modalBlock" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Choix des blocs pour votre page</h1>
+                    <h5 class="modal-title" id="exampleModalLabel">Modal Block</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    {{ render(controller('App\\Controller\\Webapp\\BlockController::listAdmin')) }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -120,5 +120,5 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
+
