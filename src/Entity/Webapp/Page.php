@@ -4,6 +4,8 @@ namespace App\Entity\Webapp;
 
 use App\Repository\Webapp\PageRepository;
 use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -69,7 +71,6 @@ class Page
 
     #[ORM\ManyToOne]
     private ?Pagechoice $pagechoice = null;
-
 
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
@@ -298,6 +299,36 @@ class Page
     public function setPagechoice(?Pagechoice $pagechoice): static
     {
         $this->pagechoice = $pagechoice;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Block>
+     */
+    public function getBlocks(): Collection
+    {
+        return $this->blocks;
+    }
+
+    public function addBlock(Block $block): static
+    {
+        if (!$this->blocks->contains($block)) {
+            $this->blocks->add($block);
+            $block->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlock(Block $block): static
+    {
+        if ($this->blocks->removeElement($block)) {
+            // set the owning side to null (unless already changed)
+            if ($block->getPage() === $this) {
+                $block->setPage(null);
+            }
+        }
 
         return $this;
     }

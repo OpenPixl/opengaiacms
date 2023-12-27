@@ -18,6 +18,11 @@
             <p>{{ app.user.firstName|capitalize }}, bienvenue sur votre espace de travail.</p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-2">
+            {{ render(controller('App\\Controller\\Admin\\DashboardController::pluginPage')) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block modal %}

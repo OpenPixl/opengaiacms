@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BlockType index{% endblock %}
+
+{% block body %}
+    <h1>BlockType index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>TypeContent</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for block_type in block_types %}
+            <tr>
+                <td>{{ block_type.id }}</td>
+                <td>{{ block_type.name }}</td>
+                <td>{{ block_type.slug }}</td>
+                <td>{{ block_type.TypeContent }}</td>
+                <td>
+                    <a href="{{ path('app_webapp_block_type_show', {'id': block_type.id}) }}">show</a>
+                    <a href="{{ path('app_webapp_block_type_edit', {'id': block_type.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_webapp_block_type_new') }}">Create new</a>
+{% endblock %}

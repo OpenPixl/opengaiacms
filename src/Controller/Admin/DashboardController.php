@@ -33,4 +33,13 @@ class DashboardController extends AbstractController
             'application' => $application,
         ]);
     }
+
+    public function pluginPage(PageRepository $pageRepository)
+    {
+        $allPages = $pageRepository->findAll();
+
+        return $this->render('admin/dashboard/plugin/page.html.twig', [
+            'count' => count($allPages)
+        ]);
+    }
 }

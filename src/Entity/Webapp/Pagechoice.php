@@ -3,6 +3,8 @@
 namespace App\Entity\Webapp;
 
 use App\Repository\Webapp\PagechoiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,15 @@ class Pagechoice
 
     #[ORM\Column(nullable: true)]
     private ?bool $isActiv = null;
+
+    #[ORM\OneToMany(mappedBy: 'pageChoice', targetEntity: BlockType::class)]
+    private Collection $blockTypes;
+
+
+    public function __construct()
+    {
+        $this->blockTypes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +71,36 @@ class Pagechoice
     public function setIsActiv(?bool $isActiv): static
     {
         $this->isActiv = $isActiv;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlockType>
+     */
+    public function getBlockTypes(): Collection
+    {
+        return $this->blockTypes;
+    }
+
+    public function addBlockType(BlockType $blockType): static
+    {
+        if (!$this->blockTypes->contains($blockType)) {
+            $this->blockTypes->add($blockType);
+            $blockType->setPageChoice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlockType(BlockType $blockType): static
+    {
+        if ($this->blockTypes->removeElement($blockType)) {
+            // set the owning side to null (unless already changed)
+            if ($blockType->getPageChoice() === $this) {
+                $blockType->setPageChoice(null);
+            }
+        }
 
         return $this;
     }

@@ -3,19 +3,16 @@
     .modal-content{
       .modal-body{
         .card{
+          border: none;
           .card-body{
             padding: 0 !important;
-            border: none !important;
+            p{
+              padding-top: 1rem;
+              padding-bottom: 1rem;
+            }
           }
         }
       }
     }
-  }
-}
-
-#modal-card{
-  .card-body{
-    padding: 0 !important;
-    border: none !important;
   }
 }

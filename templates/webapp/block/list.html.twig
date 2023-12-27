@@ -1,13 +1,12 @@
 <p>Block index</p>
 <div class="row">
-    {% for block in blocks %}
+    {% for block in blocktypes %}
         <div class="col-2 g-1">
             <div id="modal-card" class="card">
                 <img src="{{ asset('images/svg/icones/' ~ block.slug ~ '.svg')  }}" alt="" class="card-img-top">
                 <div class="card-body">
-
                     <p class="text-center">{{ block.name }}</p>
-                    <a href="#" class="stretched-link"></a>
+                    <a href="{{ path('og_webapp_page_addblock', {'id': idpage, 'idblocktype': block.id }) }}" class="stretched-link blockChoice"></a>
                 </div>
             </div>
 
