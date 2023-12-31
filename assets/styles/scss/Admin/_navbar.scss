@@ -1,7 +1,19 @@
 .navbar{
   background-color: #333333;
-  a {
+  .nav-link {
     font-size: 0.8rem;
-    color: #ffffff;
+    color: $link;
+  }
+  .navbar-brand {
+    font-size: 0.8rem;
+    color: $link;
+  }
+  .nav-link:hover, .nav-link:active {
+    font-size: 0.8rem;
+    color: $link_active;
+  }
+  .navbar-brand:hover, .navbar-brand:active {
+    font-size: 0.8rem;
+    color: $link_active;
   }
 }

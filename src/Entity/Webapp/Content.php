@@ -2,11 +2,11 @@
 
 namespace App\Entity\Webapp;
 
-use App\Repository\Webapp\ContentPageRepository;
+use App\Repository\Webapp\ContentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ContentPageRepository::class)]
-class ContentPage
+#[ORM\Entity(repositoryClass: ContentRepository::class)]
+class Content
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

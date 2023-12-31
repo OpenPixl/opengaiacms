@@ -69,9 +69,6 @@ class Page
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $seoKeywords = null;
 
-    #[ORM\ManyToOne]
-    private ?Pagechoice $pagechoice = null;
-
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function initializeSlug() {
@@ -287,48 +284,6 @@ class Page
     public function setSeoKeywords(?array $seoKeywords): static
     {
         $this->seoKeywords = $seoKeywords;
-
-        return $this;
-    }
-
-    public function getPagechoice(): ?Pagechoice
-    {
-        return $this->pagechoice;
-    }
-
-    public function setPagechoice(?Pagechoice $pagechoice): static
-    {
-        $this->pagechoice = $pagechoice;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Block>
-     */
-    public function getBlocks(): Collection
-    {
-        return $this->blocks;
-    }
-
-    public function addBlock(Block $block): static
-    {
-        if (!$this->blocks->contains($block)) {
-            $this->blocks->add($block);
-            $block->setPage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlock(Block $block): static
-    {
-        if ($this->blocks->removeElement($block)) {
-            // set the owning side to null (unless already changed)
-            if ($block->getPage() === $this) {
-                $block->setPage(null);
-            }
-        }
 
         return $this;
     }

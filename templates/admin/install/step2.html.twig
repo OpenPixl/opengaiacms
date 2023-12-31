@@ -19,10 +19,11 @@
     </nav>
 {% endblock %}
 {% block content %}
-    <section class="container">
-        {{ form_start(form) }}
-        <div class="row" id="step1">
+    <section class="container h-100">
+        <div class="row justify-content-center align-items-center h-100" id="step1">
             <div class="col-12 mt-3">
+                {{ form_start(form) }}
+
                 <h4>Completez les information pour votre page "En cours de construction".</h4>
                 <p>
                     Après cette étape, votre site sera en ligne.<br>
@@ -75,16 +76,16 @@
                         {{ form_label(form.contactXtweet) }}
                         {{ form_widget(form.contactXtweet) }}
                     </div>
+
                 </div>
-
+                <div class="row justify-content-center">
+                    <div class="col-3 mb-1">
+                        <button class="btn btn-sm btn-primary w-100">{{ button_label|default('Etape Suivante') }}</button>
+                    </div>
+                </div>
+                {{ form_widget(form) }}
             </div>
-
-            <div class="col-2">
-                <button class="btn btn-sm btn-primary w-100">{{ button_label|default('Etape Suivante') }}</button>
-            </div>
-
         </div>
-        {{ form_widget(form) }}
     </section>
 {% endblock %}
 

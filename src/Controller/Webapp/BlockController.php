@@ -3,8 +3,10 @@
 namespace App\Controller\Webapp;
 
 use App\Entity\Webapp\Block;
+use App\Entity\Webapp\Page;
 use App\Form\Webapp\BlockType;
 use App\Repository\Webapp\BlockRepository;
+use App\Repository\Webapp\BlockTypeRepository;
 use App\Repository\Webapp\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,6 +51,28 @@ class BlockController extends AbstractController
         return $this->render('webapp/block/new.html.twig', [
             'block' => $block,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/addblock/{idpage}/{idblocktype}', name: 'og_webapp_page_addblock', methods: ['GET', 'POST'])]
+    public function addBlock($idpage, $idblocktype, BlockRepository $blockRepository, BlockTypeRepository $blockTypeRepository, PageRepository $pageRepository, EntityManagerInterface $entityManager)
+    {
+        $blocktype = $blockTypeRepository->find($idblocktype);
+        $page = $pageRepository->find($idpage);
+
+        dd($blocktype, $page);
+
+        $block = new Block();
+        $block->setPage($page);
+
+        $entityManager->persist($block);
+        $entityManager->flush();
+
+        $listblock = $blockRepository->findBy(['page'=>$page]);
+        return $this->json([
+            "code"=>200,
+            "message"=>"Le block est ajouté à votre page.",
+            'liste' => $listblock
         ]);
     }
 

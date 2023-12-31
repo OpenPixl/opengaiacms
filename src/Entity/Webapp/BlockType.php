@@ -22,18 +22,6 @@ class BlockType
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\ManyToOne(inversedBy: 'blockTypes')]
-    private ?PageChoice $pageChoice = null;
-
-    #[ORM\OneToMany(mappedBy: 'blockType', targetEntity: Block::class)]
-    private Collection $blocks;
-
-    public function __construct()
-    {
-        $this->blocks = new ArrayCollection();
-    }
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -59,48 +47,6 @@ class BlockType
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getPageChoice(): ?PageChoice
-    {
-        return $this->pageChoice;
-    }
-
-    public function setPageChoice(?PageChoice $pageChoice): static
-    {
-        $this->pageChoice = $pageChoice;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Block>
-     */
-    public function getBlocks(): Collection
-    {
-        return $this->blocks;
-    }
-
-    public function addBlock(Block $block): static
-    {
-        if (!$this->blocks->contains($block)) {
-            $this->blocks->add($block);
-            $block->setBlockType($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBlock(Block $block): static
-    {
-        if ($this->blocks->removeElement($block)) {
-            // set the owning side to null (unless already changed)
-            if ($block->getBlockType() === $this) {
-                $block->setBlockType(null);
-            }
-        }
 
         return $this;
     }

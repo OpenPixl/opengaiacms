@@ -24,14 +24,6 @@ class Block
     #[ORM\ManyToOne(inversedBy: 'blocks')]
     private ?Page $page = null;
 
-    #[ORM\ManyToOne(inversedBy: 'blocks')]
-    private ?BlockType $blockType = null;
-
-    public function __construct()
-    {
-        $this->TypeBlock = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -69,18 +61,6 @@ class Block
     public function setPage(?Page $page): static
     {
         $this->page = $page;
-
-        return $this;
-    }
-
-    public function getBlockType(): ?BlockType
-    {
-        return $this->blockType;
-    }
-
-    public function setBlockType(?BlockType $blockType): static
-    {
-        $this->blockType = $blockType;
 
         return $this;
     }

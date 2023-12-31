@@ -2,23 +2,23 @@
 
 namespace App\Repository\Webapp;
 
-use App\Entity\Webapp\ContentPage;
+use App\Entity\Webapp\Content;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<ContentPage>
  *
- * @method ContentPage|null find($id, $lockMode = null, $lockVersion = null)
- * @method ContentPage|null findOneBy(array $criteria, array $orderBy = null)
- * @method ContentPage[]    findAll()
- * @method ContentPage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Content|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Content|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Content[]    findAll()
+ * @method Content[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContentPageRepository extends ServiceEntityRepository
+class ContentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ContentPage::class);
+        parent::__construct($registry, Content::class);
     }
 
 //    /**
