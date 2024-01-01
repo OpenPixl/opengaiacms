@@ -7,6 +7,7 @@ use App\Entity\Admin\UnderConstruction;
 use App\Repository\Admin\ApplicationRepository;
 use App\Repository\Admin\ConfigRepository;
 use App\Repository\Admin\UnderConstructionRepository;
+use App\Repository\Webapp\BlockRepository;
 use App\Repository\Webapp\PageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class PublicController extends AbstractController
     }
 
     #[Route("/home", name: 'og_webapp_public_homepage')]
-    public function homepage(ConfigRepository $configRepository)
+    public function homepage(ConfigRepository $configRepository, PageRepository $pageRepository)
     {
         $config = $configRepository->findFirstReccurence();
         $offline = $config->IsIsOffLine();
@@ -60,6 +61,15 @@ class PublicController extends AbstractController
         {
             return $this->redirectToRoute('og_webapp_public_offline');
         }
+
+        $firstPage = $pageRepository->findFirstReccurence();
+        //dd($firstPage);
+        if($firstPage){
+            return $this->redirectToRoute('og_webapp_public_page', [
+                'slug' => $firstPage->getslug()
+            ]);
+        }
+
         return $this->render('webapp/public/homepage.html.twig');
     }
 
@@ -77,4 +87,32 @@ class PublicController extends AbstractController
             'offline' => $offline
         ]);
     }
+
+    #[Route("/{slug}", name: 'og_webapp_public_page')]
+    public function page(
+        $slug,
+        ApplicationRepository $applicationRepository,
+        PageRepository $pageRepository,
+        BlockRepository $blockRepository,
+        ConfigRepository $configRepository,
+    )
+    {
+        $config = $configRepository->findFirstReccurence();
+        $offline = $config->IsIsOffLine();
+
+        if($offline == 1)
+        {
+            return $this->redirectToRoute('og_webapp_public_offline');
+        }
+        $application = $applicationRepository->findFirstReccurence();
+        $page = $pageRepository->findbyslug($slug);
+        $blocks = $blockRepository->findBy(['page' => $page]);
+
+        return $this->render('webapp/public/page.html.twig', [
+            'application' => $application,
+            'page' => $page,
+            'blocks' => $blocks
+        ]);
+    }
+
 }

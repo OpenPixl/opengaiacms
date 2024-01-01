@@ -6,7 +6,7 @@
                 <img src="{{ asset('images/svg/icones/' ~ block.slug ~ '.svg')  }}" alt="" class="card-img-top">
                 <div class="card-body">
                     <p class="text-center">{{ block.name }}</p>
-                    <a href="{{ path('og_webapp_page_addblock', {'id': idpage, 'idblocktype': block.id }) }}" class="stretched-link blockChoice"></a>
+                    <a href="{{ path('og_webapp_page_addblock', {'idpage': idpage, 'idblocktype': block.id }) }}" class="stretched-link blockChoice"></a>
                 </div>
             </div>
 

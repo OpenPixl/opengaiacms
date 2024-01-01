@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Config{% endblock %}
+
+{% block body %}
+    <h1>Config</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ config.id }}</td>
+            </tr>
+            <tr>
+                <th>IsOffLine</th>
+                <td>{{ config.IsOffLine ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsInstalled</th>
+                <td>{{ config.IsInstalled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Host</th>
+                <td>{{ config.host }}</td>
+            </tr>
+            <tr>
+                <th>Dbhost</th>
+                <td>{{ config.dbhost }}</td>
+            </tr>
+            <tr>
+                <th>Step</th>
+                <td>{{ config.step }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('og_admin_config_index') }}">back to list</a>
+
+    <a href="{{ path('og_admin_config_edit', {'id': config.id}) }}">edit</a>
+
+    {{ include('admin/config/_delete_form.html.twig') }}
+{% endblock %}

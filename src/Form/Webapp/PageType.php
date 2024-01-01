@@ -2,8 +2,8 @@
 
 namespace App\Form\Webapp;
 
+use App\Entity\Webapp\Content;
 use App\Entity\Webapp\Page;
-use App\Entity\Webapp\Pagechoice;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -78,19 +78,20 @@ class PageType extends AbstractType
             ->add('seoTitle')
             ->add('seoDescription')
             ->add('seoKeywords')
-            ->add('pagechoice', EntityType::class, [
+            ->add('content', EntityType::class, [
                 'label'=> 'Quel type de page souhaitez vous créer ?',
                 'required' => false,
-                'class' => Pagechoice::class,
+                'class' => Content::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('p')
                         ->orderBy('p.name', 'ASC');
                 },
+
                 'choice_label' => 'name',
-                'choice_attr' => function (Pagechoice $pagechoice, $key, $index) {
-                    return ['data-data' => $pagechoice->getName() ];
+                'choice_attr' => function (Content $content, $key, $index) {
+                    return ['data-data' => $content->getName() ];
                 },
-                'placeholder' => 'A définir',
+                'placeholder' => 'Aucune',
             ])
         ;
     }

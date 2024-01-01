@@ -69,6 +69,13 @@ class Page
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private ?array $seoKeywords = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Content $content = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function initializeSlug() {
@@ -284,6 +291,30 @@ class Page
     public function setSeoKeywords(?array $seoKeywords): static
     {
         $this->seoKeywords = $seoKeywords;
+
+        return $this;
+    }
+
+    public function getContent(): ?Content
+    {
+        return $this->content;
+    }
+
+    public function setContent(Content $content): static
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

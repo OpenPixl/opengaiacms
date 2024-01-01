@@ -44,9 +44,18 @@ class PageRepository extends ServiceEntityRepository
     public function findbyslug($slug)
     {
         return $this->createQueryBuilder('p')
-            ->select('p.id, p.name, p.slug, p.description, p.state, p.isMenu, p.seoTitle, p.isShowtitle')
+            ->select('p.id, p.name, p.slug, p.description, p.state, p.isMenu, p.seoTitle, p.isShowTitle')
             ->andWhere('p.slug = :slug')
             ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+    Public function findFirstReccurence(){
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
             ;

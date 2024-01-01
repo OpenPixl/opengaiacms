@@ -13,8 +13,10 @@ $side-large: 12rem;
 @import "scss/Admin/navbar";
 @import "scss/Admin/modal";
 @import "scss/Admin/form";
-//*** ------------- Import fonts ---------------- ***//
+//*** ------------- Import bootstrap ---------------- ***//
 @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/functions";
+//*** ------------- Import fonts ---------------- ***//
 @import "scss/mixins/fontface";
 @include fontface('Aileron-regular', '../../fonts/aileron/aileron-regular', 500, normal);
 @include fontface('Aileron-light', '../../fonts/aileron/aileron-light', 300, normal);

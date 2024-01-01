@@ -15,7 +15,6 @@
     <div class="menu-items">
         <h6>WEB</h6>
         <ul>
-
             <li><a href="{{ path('og_webapp_page_index') }}" class="{% if app.request.attributes.get("_route") == 'op_webapp_page_index' or app.request.attributes.get("_route") == 'op_webapp_page_edit'%}active{% endif %}"><i class="fa-duotone fa-pager"></i> Pages</a></li>
             <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_index' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Articles</a></li>
             <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_webapp_articles_actualites' %}active{% endif %}"><i class="fa-duotone fa-newspaper"></i> Actualités</a></li>
@@ -30,7 +29,7 @@
 
             <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-message-code"></i> Contacts mails</a></li>
             <li><a href="{{ path('og_admin_member_index')}}" class="{% if app.request.attributes.get("_route") == 'og_admin_member_index' or app.request.attributes.get("_route") == 'op_admin_member_show' or app.request.attributes.get("_route") == 'op_admin_member_edit'%}active{% endif %}"><i class="fa-duotone fa-users"></i> Membres</a></li>
-            <li><a href="#" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-gear"></i> Paramètres</a></li>
+            <li><a href="{{ path('og_admin_config_edit', {'id' : 1})}}" class="{% if app.request.attributes.get("_route") == 'op_admin_application_index' %}active{% endif %}"><i class="fa-duotone fa-gear"></i> Paramètres</a></li>
 
         </ul>
     </div>

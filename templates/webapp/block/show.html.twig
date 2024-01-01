@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Block{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Block</h1>
 
     <table class="table">
@@ -22,9 +22,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_webapp_block_index') }}">back to list</a>
+    <a href="{{ path('og_webapp_block_index') }}">back to list</a>
 
-    <a href="{{ path('app_webapp_block_edit', {'id': block.id}) }}">edit</a>
+    <a href="{{ path('og_webapp_block_edit', {'id': block.id}) }}">edit</a>
 
     {{ include('webapp/block/_delete_form.html.twig') }}
 {% endblock %}

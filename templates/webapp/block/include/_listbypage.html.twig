@@ -1,9 +1,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Slug</th>
+            <th></th>
+            <th>Nom</th>
             <th>actions</th>
         </tr>
     </thead>
@@ -12,10 +11,9 @@
         <tr>
             <td>{{ block.id }}</td>
             <td>{{ block.name }}</td>
-            <td>{{ block.slug }}</td>
             <td>
                 <a href="{{ path('og_webapp_block_show', {'id': block.id}) }}">show</a>
-                <a href="{{ path('og_webapp_block_edit', {'id': block.id}) }}"><i class="fa-duotone fa-cog"></i></a>
+                <a href="{{ path('og_webapp_block_edit', {'id': block.id}) }}" data-bs-toggle="modal" data-bs-target="#modalBlock" data-bs-id="EDIT-Paramètre du block-{{ idpage }}"><i class="fa-duotone fa-cog"></i></a>
             </td>
         </tr>
     {% else %}

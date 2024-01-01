@@ -24,7 +24,7 @@
             <td>
                 <a href="{{ path('og_webapp_page_show', {'id': page.id}) }}" class="btn btn-sm btn-outline-secondary" ><i class="fa-duotone fa-eye"></i></a>
                 <a class="btn btn-sm btn-outline-secondary" href="{{ path('og_webapp_page_edit', {'id': page.id}) }}" data-bs-toggle="modal" data-bs-target="#modalPage" data-bs-whatever="EDIT-Paramètres de la page-{{ page.id }}"><i class="fa-duotone fa-gear"></i></a>
-                <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalPage" data-bs-whatever="DEL-Suppression de la page-{{ page.id }}-{{ page.name }}"><i class="fa-duotone fa-trash-can"></i></a>
+                <a class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalBlock" data-bs-whatever="EDIT-Suppression de la page-{{ page.id }}-{{ page.name }}"><i class="fa-duotone fa-trash-can"></i></a>
             </td>
         </tr>
     {% else %}

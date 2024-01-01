@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Form\Webapp;
+namespace App\Form\Admin;
 
-use App\Entity\Webapp\Block;
+use App\Entity\Admin\Config;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlockType extends AbstractType
+class ConfigType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('slug')
-            ->add('title')
-            ->add('subtitle')
-            ->add('description')
+            ->add('IsOffLine')
+            ->add('IsInstalled')
+            ->add('host')
+            ->add('dbhost')
+            ->add('step')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Block::class,
+            'data_class' => Config::class,
         ]);
     }
 }

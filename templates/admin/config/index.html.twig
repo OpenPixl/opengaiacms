@@ -1,0 +1,43 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Config index{% endblock %}
+
+{% block content %}
+    <h1>Config index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>IsOffLine</th>
+                <th>IsInstalled</th>
+                <th>Host</th>
+                <th>Dbhost</th>
+                <th>Step</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for config in configs %}
+            <tr>
+                <td>{{ config.id }}</td>
+                <td>{{ config.IsOffLine ? 'Yes' : 'No' }}</td>
+                <td>{{ config.IsInstalled ? 'Yes' : 'No' }}</td>
+                <td>{{ config.host }}</td>
+                <td>{{ config.dbhost }}</td>
+                <td>{{ config.step }}</td>
+                <td>
+                    <a href="{{ path('og_admin_config_show', {'id': config.id}) }}">show</a>
+                    <a href="{{ path('og_admin_config_edit', {'id': config.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('og_admin_config_new') }}">Create new</a>
+{% endblock %}

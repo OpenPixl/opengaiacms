@@ -22,10 +22,11 @@ class BlockTypeController extends AbstractController
         ]);
     }
 
-    #[Route('/listadmin/{pageChoice}/{idpage}', name: 'app_webapp_block_listadmin', methods: ['GET'])]
-    public function listAdmin($pageChoice, BlockTypeRepository $blockTypeRepository, $idpage): Response
+    #[Route('/listadmin/{content}/{idpage}', name: 'app_webapp_block_listadmin', methods: ['GET'])]
+    public function listAdmin($content, BlockTypeRepository $blockTypeRepository, $idpage): Response
     {
-        $blocktypes = $blockTypeRepository->findBy(['pageChoice' => $pageChoice]);
+        $blocktypes = $blockTypeRepository->findBy(['content' => $content]);
+        //dd($blocktypes);
         return $this->render('webapp/block/list.html.twig', [
             'blocktypes' => $blocktypes,
             'idpage' => $idpage

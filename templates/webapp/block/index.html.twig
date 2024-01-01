@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Block index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Block index</h1>
 
     <table class="table">
@@ -21,8 +21,8 @@
                 <td>{{ block.name }}</td>
                 <td>{{ block.slug }}</td>
                 <td>
-                    <a href="{{ path('app_webapp_block_show', {'id': block.id}) }}">show</a>
-                    <a href="{{ path('app_webapp_block_edit', {'id': block.id}) }}">edit</a>
+                    <a href="{{ path('og_webapp_block_show', {'id': block.id}) }}">show</a>
+                    <a href="{{ path('og_webapp_block_edit', {'id': block.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_webapp_block_new') }}">Create new</a>
+    <a href="{{ path('og_webapp_block_new') }}">Create new</a>
 {% endblock %}

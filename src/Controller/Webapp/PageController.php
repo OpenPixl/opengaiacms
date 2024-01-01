@@ -37,6 +37,7 @@ class PageController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($page);
             $entityManager->flush();
 
