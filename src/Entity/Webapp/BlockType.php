@@ -29,6 +29,9 @@ class BlockType
     #[ORM\OneToMany(mappedBy: 'blockType', targetEntity: Block::class)]
     private Collection $blocks;
 
+    #[ORM\ManyToOne]
+    private ?Content $contentBlock = null;
+
     public function __construct()
     {
         $this->blocks = new ArrayCollection();
@@ -101,6 +104,18 @@ class BlockType
                 $block->setBlockType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContentBlock(): ?Content
+    {
+        return $this->contentBlock;
+    }
+
+    public function setContentBlock(?Content $contentBlock): static
+    {
+        $this->contentBlock = $contentBlock;
 
         return $this;
     }

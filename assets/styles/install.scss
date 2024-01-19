@@ -1,7 +1,7 @@
-$white : #ffffff;
+$white: #ffffff;
 
-//@import "scss/App/login";
-@import "scss/App/main";
+/** Import des fichiers du template de base **/
+@import "scss/App/install";
 /** Import des fichiers bootstrap **/
 @import "~bootstrap/scss/bootstrap";
 //*** ------------- Import fonts ---------------- ***//

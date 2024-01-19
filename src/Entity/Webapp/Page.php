@@ -76,6 +76,9 @@ class Page
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne]
+    private ?Content $contentPage = null;
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function initializeSlug() {
@@ -319,6 +322,21 @@ class Page
 
         return $this;
     }
+<<<<<<<
 =======
 >>>>>>> Stashed changes
+=======
+
+    public function getContentPage(): ?Content
+    {
+        return $this->contentPage;
+    }
+
+    public function setContentPage(?Content $contentPage): static
+    {
+        $this->contentPage = $contentPage;
+
+        return $this;
+    }
+>>>>>>>
 }

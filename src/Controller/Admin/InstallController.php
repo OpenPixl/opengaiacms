@@ -12,6 +12,7 @@ use App\Repository\Admin\ApplicationRepository;
 use App\Repository\Admin\ConfigRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,31 @@ class InstallController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // intégration d'une image pour le logo de la structure
+            $logoFile = $form->get('logoFile')->getData();
+            if ($logoFile) {
+                $originallogoFileName = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safelogoFileName = $slugger->slug($originallogoFileName);
+                $newlogoFileName = $safelogoFileName . '-' . uniqid() . '.' . $logoFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $logoFile->move(
+                        $this->getParameter('application_directory'),
+                        $newlogoFileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $application->setLogoFilename($newlogoFileName);
+                //$application->setLogoFilesize($logoFile->getSize());
+                $application->setLogoFileext($logoFile->guessExtension());
+            }
+            $em->persist($application);
+
+
             // Récupération des éléments du formulaire
             $adminFirstName = $form->get('webmasterFirstname')->getData();
             $adminLastName = $form->get('webmasterLastname')->getData();
