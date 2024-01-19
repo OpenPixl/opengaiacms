@@ -306,6 +306,7 @@ class Page
 
         return $this;
     }
+<<<<<<< Updated upstream
 
     public function getDescription(): ?string
     {
@@ -318,4 +319,6 @@ class Page
 
         return $this;
     }
+=======
+>>>>>>> Stashed changes
 }

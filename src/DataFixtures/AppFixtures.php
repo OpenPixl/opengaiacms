@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Webapp\Pagechoice;
 use Faker\Factory;
 use Faker\Generator;
 use App\Entity\Webapp\BlockType;
@@ -24,9 +25,15 @@ class AppFixtures extends Fixture
     {
         // $product = new Product();
         // $manager->persist($product);
+        $Arraypc = ['vitrine', 'formation', 'ecommerce', 'gestion', 'contact'];
+        $arraybt = ['Jumbotron', 'Team', 'Formulaire de contact', 'Inscription newsletter', 'Galerie', 'Actualités'];
 
-        $blocktype = new BlockType();
-        $blocktype->setName('Jumbotron');
+        foreach ($arraybt as $bt){
+            $blockType = new BlockType();
+            $blockType->setName($bt);
+        }
+        $blockType = new BlockType();
+        $blockType->setName('Jumbotron');
 
         $manager->flush();
     }

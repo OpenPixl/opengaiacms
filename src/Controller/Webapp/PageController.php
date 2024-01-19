@@ -73,6 +73,29 @@ class PageController extends AbstractController
         ]);
     }
 
+<<<<<<< Updated upstream
+=======
+    #[Route('/{id}/addblock/{idblocktype}', name: 'og_webapp_page_addblock', methods: ['GET', 'POST'])]
+     public function addBlock(Page $page, $idblocktype, BlockRepository $blockRepository, BlockTypeRepository $blockTypeRepository, EntityManagerInterface $entityManager)
+     {
+         $name = substr($page->getName(), 0,2);
+         $blocktype = $blockTypeRepository->find($idblocktype);
+         $block = new Block();
+         $block->setName($name);
+         $block->setPage($page);
+         $block->setBlockType($blocktype);
+         $entityManager->persist($block);
+         $entityManager->flush();
+
+         $listblock = $blockRepository->findBy(['page'=>$page]);
+         return $this->json([
+             "code"=>200,
+             "message"=>"Le block est ajouté à votre page.",
+             'liste' => $listblock
+         ]);
+     }
+
+>>>>>>> Stashed changes
     #[Route('/{id}/edit', name: 'og_webapp_page_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Page $page, EntityManagerInterface $entityManager, PageRepository $pageRepository): Response
     {
